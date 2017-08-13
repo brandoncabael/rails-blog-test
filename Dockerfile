@@ -17,4 +17,6 @@ RUN bundle install
 
 COPY . .
 
+ENTRYPOINT [ "./docker-entrypoint.sh" ]
+
 CMD bundle exec puma -C config/puma.rb
