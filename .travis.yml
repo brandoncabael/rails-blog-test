@@ -1,0 +1,17 @@
+language: ruby
+rvm:
+- 2.4.1
+- jruby-19mode
+- rbx-2
+
+sudo: required
+
+services:
+  - docker
+  - docker-compose
+
+script:
+  - docker-compose build
+  - docker-compose run blog bundle exec rake db:create
+  - docker-compose run blog bundle exec rake db:migrate
+  - docker-compose up
