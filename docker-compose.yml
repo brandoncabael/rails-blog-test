@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+  postgres:
+    image: postgres:9.6-alpine
+    environment:
+      POSTGRES_USER: blog_user
+      POSTGRES_PASSWORD: blog_pass
+    volumes:
+      - postgres:/var/lib/postgresql/data
+
+  blog:
+    build: .
+    volumes:
+      - .:/blog
+    environment:
+      DATABASE_URL: postgresql://blog_user:blog_pass@postgres:5432/blog_data
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
+
+volumes:
+  postgres:
