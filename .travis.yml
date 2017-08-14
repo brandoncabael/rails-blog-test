@@ -1,17 +1,25 @@
 language: ruby
-
 sudo: required
-
 services:
-  - docker
-
+- docker
+before_install:
+- pip install awscli
 install:
-  - docker-compose build
-
+- docker-compose build
 before_script:
-  - docker-compose up -d
-  - docker-compose run blog bundle exec rake db:create
-  - docker-compose run blog bundle exec rake db:migrate
-
+- docker-compose up -d
+- docker-compose run blog bundle exec rake db:create
+- docker-compose run blog bundle exec rake db:migrate
 script:
-  - docker-compose run blog bundle exec rake
+- docker-compose run blog bundle exec rake
+after_success:
+- "./deploy.sh"
+notifications:
+  slack:
+    secure: YeSYkLcl76VXDNOjyeowgk7BSBfBNrc1GzybjJN7hNM+0+slXO99D365l9uOkJC85oZfmKhdTYrG55NoUq0bxLhfYOm+aVavA1u0cTzo9svRAXNTou9/azZYbVeM1Knoq+G4mBoYRiD9TWxGybh5ctGm5y+6HtEfJD6clRA1KBN3t8HPE5UeNexbjXzG3d1xaHhG0mk9xY0nRxpyU6Kfau2QwbLDAveY4NtHwM1welgZtHo5+WEDQCfnznHZhXp4zSd4Rq+U6kIJ/TRcsDN3DeRSu/rMEUzWLRPZgHxH3AD1+kz1BGvUET23SwZ9N8+E40IyzS//PW4fHUmHj58UoH0Zx3NBigg5m3+MbM47bnZiuGcGN8noIviRqjPGPdsPA4Q3b9hKS7j/ZWLmXQtOLy8v8Kf4WMUvA8RpE5RIti9b9O1CxSzw1k15KX28e07Wv1kjQaNhou0tIeOeMTPuEQfb5KdQg9/uIH7WZ+NRFK55Pcj4jFYBEkYPwgGcB1I40EyFEjf01VhLp2hHjLfMWzjXRaJwhLKr8YfGHuFCLK11e9tk7/q5U3oGfp2U59oMf6Fj9H74kq8qNjmqGhS1ANIXako8yercKDQyUJldiH+eNHoKYVVXVk3emHAUsaZJGupGJQoAGp4EiZ6s6CYWAJiX540t/aOdAt1/iKrOBe4=
+env:
+  global:
+  - AWS_REGION=us-west-2
+  - AWS_ACCOUNT=109709615829
+  - secure: HUow8lM5UQGTNMkbPR8lChKfi6dkYwVwojiUm9Ymd6wA4anZxcdhgI1uQ0kMHMCWf2n8dyrUFDp7HZIg0JmVIuktV5yccOiL06jusckFNs9YpWISVySrDEPsFLj4KkFJSOuquyHwwHFr26D/e+VlbnUBhsIMhEEqjgbYsaIKPSpgHT13EQPyRauz8YF4JtLam6qid3IVIWgJD8RkOaBZtqTlBDgdDF+sjYVkgHaXbJfj5sXpuYwYWXPPKtM/sy+SK+W6zzC14EWZDDkql9Ufwi3EydKDikQ9v5JkSeUm6vVQLkk/0KusefLRdVV/a8dzJWoSKV9dRjSDFrhSLrky2heSQO1Mck8WryTl7653CYZQVpoP5WouLeKxWEZwq5g5amhwiUI1ufIKdrGaAfisQ5osdh4CjqHq1FUHG5SHxLESjvjedUYmnj91E/2KaxT7FajfClUU0gmbH0VCtrhwCU5M8Ecc4cmbkP2PIK5+vHWYHGVns7GHJeq1t48IbeT/SHcZUp61WfztTRQlePEj0uwLSDTfDFefeuKTzKrvoteZNNkGA4o8rXMnqw7C6pWUtJyzD0cPkpjKWHMh3Cq69d7Nu6FMESWlWaYsVt0lPvsoeogcBe+/3FkuvK+UiU/cJVCiEIQzUOGwrwiK4s/TIHlG0V4aYEZcnA7SoJXH34E=
+  - secure: MDXYcyrAhZ3JdTFBFcklp42SaZ9t/xItR2t4Lpr8Sw7b9Ul8Dq3qRJSgMxLeUAQsG2JfeDp9BKX7023o9VuyUfBmREVtr+HQe321c+fNGMyZmO5WmeU7mtO9qiTF8umAT+nCWwcwW2vH/fvRrVkEBassFV60PULDPa74KWWE5BWegKWOdtBM/rHt6JCKeWCj1WZjLqOQ3I/7ZJyjkKHbYJYUvhC4uZXkutDpS8VoeiuyuQW518ObmpLWt6HIgCLXgoKz84BqYWmKzFzMwoisTIbSJ33tn5lN2reADx/ooNBau8eOhttnAL9JAaKjA3AWrkI1MBPvFVrM6gS92Kkrx8oZ9ZqGD79Zq7qlCeWGmHLx3yJNjZtzJx9kZqnQTeyB0iagvDR6+3bsGTYHp2dRgrvgbRe4P+7mBvBT/sGVFZ5o+hfyPDVgWgbVjwLK/TU59XZQXYQhkWijPqiEqVf+7gPENT5AQBnEUNrn+sAdpPzlP8msQcVL7NrQiZOkadtBEhojmWWnLMDDQucb8ayes4AA890VebG9RkHh7yXVGVHiYkBMNtwuzTNCsZT+5st3k4ZUNcjtWKxHyC04YA/bT1p6Hvb5uLA/iufRMlYkvK0VFTXdqCAhHb7lcGPB1+GhSNSOG7shsnclrjMYwimuYbmXkkbNVPseTBuY8t7Gvrg=
