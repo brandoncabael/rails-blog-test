@@ -15,6 +15,9 @@ script:
 after_success:
 - "./deploy.sh"
 notifications:
+  webhooks:
+    urls:
+      - https://if3yv4d8lc.execute-api.us-west-2.amazonaws.com/dev/service/update
   slack:
     secure: YeSYkLcl76VXDNOjyeowgk7BSBfBNrc1GzybjJN7hNM+0+slXO99D365l9uOkJC85oZfmKhdTYrG55NoUq0bxLhfYOm+aVavA1u0cTzo9svRAXNTou9/azZYbVeM1Knoq+G4mBoYRiD9TWxGybh5ctGm5y+6HtEfJD6clRA1KBN3t8HPE5UeNexbjXzG3d1xaHhG0mk9xY0nRxpyU6Kfau2QwbLDAveY4NtHwM1welgZtHo5+WEDQCfnznHZhXp4zSd4Rq+U6kIJ/TRcsDN3DeRSu/rMEUzWLRPZgHxH3AD1+kz1BGvUET23SwZ9N8+E40IyzS//PW4fHUmHj58UoH0Zx3NBigg5m3+MbM47bnZiuGcGN8noIviRqjPGPdsPA4Q3b9hKS7j/ZWLmXQtOLy8v8Kf4WMUvA8RpE5RIti9b9O1CxSzw1k15KX28e07Wv1kjQaNhou0tIeOeMTPuEQfb5KdQg9/uIH7WZ+NRFK55Pcj4jFYBEkYPwgGcB1I40EyFEjf01VhLp2hHjLfMWzjXRaJwhLKr8YfGHuFCLK11e9tk7/q5U3oGfp2U59oMf6Fj9H74kq8qNjmqGhS1ANIXako8yercKDQyUJldiH+eNHoKYVVXVk3emHAUsaZJGupGJQoAGp4EiZ6s6CYWAJiX540t/aOdAt1/iKrOBe4=
 env:
