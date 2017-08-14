@@ -5,7 +5,7 @@ set -e
 BUILD_TAG=${TRAVIS_BUILD_NUMBER:-latest}
 AWS_ECR_URL=$AWS_ACCOUNT.dkr.ecr.$AWS_REGION.amazonaws.com/$TRAVIS_REPO_SLUG
 
-BRANCH_TARGETS=("master" "deploy-and-notify")
+BRANCH_TARGETS=("master")
 
 should_deploy_branch() {
   for i in "${BRANCH_TARGETS[@]}"; do
