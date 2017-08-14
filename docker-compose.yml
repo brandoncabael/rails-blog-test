@@ -14,7 +14,10 @@ services:
     volumes:
       - .:/blog
     environment:
-      DATABASE_URL: postgresql://blog_user:blog_pass@postgres:5432/blog_data
+      DATABASE_HOST: postgres
+      DATABASE_PORT: 5432
+      DATABASE_USER: blog_user
+      DATABASE_PASS: blog_pass
     ports:
       - "3000:3000"
     depends_on:

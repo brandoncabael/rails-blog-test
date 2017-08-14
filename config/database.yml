@@ -1,12 +1,21 @@
-development:
-  url: <%= ENV['DATABASE_URL'].gsub('?', '_development?') %>
+# PostGreSQL
 
+development: &development
+  pool: 5
+  adapter: postgresql
+  encoding: unicode
+  database: blog_development
+  host: <%= ENV['DATABASE_HOST'] %>
+  port: <%= ENV['DATABASE_PORT'] %>
+  username: <%= ENV['DATABASE_USER'] %>
+  password: <%= ENV['DATABASE_PASS'] %>
+# Warning: The database defined as "test" will be erased and
+# re-generated from your development database when you run "rake".
+# Do not set this db to the same as development or production.
 test:
-  url: <%= ENV['DATABASE_URL'].gsub('?', '_test?') %>
-
-staging:
-  url: <%= ENV['DATABASE_URL'].gsub('?', '_staging?') %>
+  <<: *development
+  database: blog_test
 
 production:
-  url: <%= ENV['DATABASE_URL'].gsub('?', '_production?') %>
-  
+  <<: *development
+  database: blog_production
